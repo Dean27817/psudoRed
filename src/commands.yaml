@@ -8,10 +8,8 @@ coppy:
 move:
   x:
 
-  y:
-
   command:
-    -mov 0 y
+    -mov 0 x
     -dat 0 -1
 
 int:

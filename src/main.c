@@ -1,10 +1,29 @@
 #include <stdio.h>
-#include <errno.h>
 #include <yaml.h>
 #include <assert.h>
+#include <stdbool.h>
+
+bool openFile(FILE *file, char *fileName, char *fileType)
+{
+	file = fopen(fileName, fileType);
+
+	if(file != NULL)
+	{
+		printf("found %s file\n", fileName);
+		return true;
+	}
+	else
+	{
+		printf("couldent find %s file", fileName);
+		return false;
+	}
+}
+
+
 
 int main(int argc, char* argv[])
 {
+	//makes sure the user put the correct number of files
 	if (argc != 3)
 	{
 
@@ -12,67 +31,65 @@ int main(int argc, char* argv[])
 		return 1;
 	}
 
+	//creates the file objects
 	printf("%s \n%s\n", argv[1], argv[2]);
 	FILE* IN;
 	FILE* OUT;
 	FILE* COMMANDS;
 
-	IN = fopen(argv[1], "r");
-	if(IN != NULL)
+	//loads the files into memory
+	if(!openFile(IN, argv[1], "r"))
 	{
-		printf("found input file\n");
-	}
-	else
-	{
-		perror("couldent find input file");
 		return 1;
 	}
 
-	OUT = fopen(argv[2], "w");
-	if(OUT != NULL)
+	if(!openFile(OUT, argv[2], "w"))
 	{
-		printf("made output file\n");
-	}
-	else
-	{
-		perror("couldent make output file");
 		return 1;
 	}
 
-
-	COMMANDS = fopen("commands.yaml", "r");
-	assert(COMMANDS);
-	if(COMMANDS != NULL)
+	if(!openFile(COMMANDS, "src/commands.yaml", "rb"))
 	{
-		printf("found commands file\n");
-	}
-	else
-	{
-		perror("couldent find commands file");
 		return 1;
 	}
 
-
+	//creates yaml parser object
 	yaml_parser_t parser;
-	yaml_parser_document_t keyDocs;
-	yaml_node_t node;
+	yaml_document_t keyDocs;
+	yaml_node_t *node;
 
-	assert(yaml_parser_initialize(&parser));
+	//starts parser
+	if(!yaml_parser_initialize(&parser))
+	{
+		printf("faild to init parser");
+		return 1;
+	}
+	printf("loaded parser\n");
+
 	yaml_parser_set_input_file(&parser, COMMANDS);
+	printf("set input command file");
+
 	if(!yaml_parser_load(&parser, &keyDocs))
 	{
-		perror("faild to load parser");
+		printf("faild to load parser");
 		return 1;
 	}
 	else
 	{
-		printf("loaded yaml parser");
+		printf("loaded yaml parser\n");
 	}
 
+
+	///////////////////////////////////////////////////////////////////done starting files
+
+
+	//unloads all objects from memory
+	printf("exiting\n");
 	yaml_parser_delete(&parser);
 	fclose(IN);
 	fclose(OUT);
 	fclose(COMMANDS);
+	printf("done\n");
 
 		
 }
