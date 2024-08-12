@@ -3,5 +3,5 @@ compile:
 	./compile
 
 run:
-	./compile source.txt output.txt
+	./compile ../source.txt ../output.txt
 	rm compile

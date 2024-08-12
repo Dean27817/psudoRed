@@ -41,6 +41,7 @@ int main(int argc, char* argv[])
 
 
 	COMMANDS = fopen("commands.yaml", "r");
+	assert(COMMANDS);
 	if(COMMANDS != NULL)
 	{
 		printf("found commands file\n");
@@ -53,8 +54,20 @@ int main(int argc, char* argv[])
 
 
 	yaml_parser_t parser;
-	yaml_parser_initialize(&parser);
+	yaml_parser_document_t keyDocs;
+	yaml_node_t node;
+
+	assert(yaml_parser_initialize(&parser));
 	yaml_parser_set_input_file(&parser, COMMANDS);
+	if(!yaml_parser_load(&parser, &keyDocs))
+	{
+		perror("faild to load parser");
+		return 1;
+	}
+	else
+	{
+		printf("loaded yaml parser");
+	}
 
 	yaml_parser_delete(&parser);
 	fclose(IN);
