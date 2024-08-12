@@ -1,0 +1,38 @@
+coppy:
+  x:
+
+  y:
+
+  command:
+    mov x y
+move:
+  x:
+
+  y:
+
+  command:
+    -mov 0 y
+    -dat 0 -1
+
+int:
+  x:
+
+  command:
+    -spl  1
+    -dat x
+
+split:
+  x:
+
+  cpmmand:
+    -spl  x
+
+if:
+
+while:
+
+for:
+
+fun:
+
+
