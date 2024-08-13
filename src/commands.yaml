@@ -1,36 +1,36 @@
--coppy:
+coppy:
   x:
 
   y:
 
   command:
     mov x y
--move:
+move:
   x:
 
   command:
-    -mov 0 x
-    -dat 0 -1
+    mov 0 x
+    dat 0 -1
 
--int:
+int:
   x:
 
   command:
-    -spl  1
-    -dat x
+    spl  1
+    dat x
 
--split:
+split:
   x:
 
   cpmmand:
-    -spl  x
+    spl  x
 
--if:
+if:
 
--while:
+while:
 
--for:
+for:
 
--fun:
+fun:
 
 
