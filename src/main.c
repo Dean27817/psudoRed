@@ -3,26 +3,24 @@
 #include <assert.h>
 #include <stdbool.h>
 
-class subCommand
+typedef struct
 {
+	char *name;
+	char *commands[];
+} subCommand;
 
-};
-
-class command
+typedef struct
 {
-	public:
+	char *name;
+
+	//the paramiters for the sub-commands
+	int x;
+	int y;
 
 
-	private:
-
-	void createSubCommand(int subNum, )
-	{
-		for(int i = 0; i < subNum; i++)
-		{
-
-		}
-	}
-};
+	//the array of all the sub commands that a keyword has
+	subCommand *subArray[];
+} command;
 
 bool openFile(FILE **file, char *fileName, char *fileType)
 {
@@ -73,10 +71,7 @@ int main(int argc, char* argv[])
 
 	//creates yaml parser object
 	yaml_parser_t parser;
-	yaml_document_t keyDocs;
-	yaml_node_t *node;
-	yaml_event_t event;
-
+	yaml_token_t token;
 	//starts parser
 	if(!yaml_parser_initialize(&parser))
 	{
@@ -88,14 +83,6 @@ int main(int argc, char* argv[])
 	yaml_parser_set_input_file(&parser, COMMANDS);
 	printf("set input command file\n");
 
-	if(!yaml_parser_load(&parser, &keyDocs))
-	{
-		printf("faild to load parser");
-		return 1;
-	}
-	printf("loaded yaml parser\n");
-
-
 	///////////////////////////////////////////////////////////////////done starting files
 	
 	int done = 0;
@@ -103,17 +90,36 @@ int main(int argc, char* argv[])
 	while(!done)
 	{
 		//creates the event and checks for errors
-		if(!yaml_parser_parse(&parser, &event))
+		if(!yaml_parser_scan(&parser, &token))
 		{
 			printf("error reading commands file");
 			return 1;
 		}
+	
+		//reads the tokens of the yaml file
+		switch(token.type)
+		{
+			//start and end of the yaml file
+			case YAML_STREAM_START_TOKEN:
+				printf("started yaml file\n");
+			break;
+			case YAML_STREAM_END_TOKEN:
+				printf("end of file\n");
+			break;
+
+			case YAML_KEY_TOKEN:
+
+			break;
+			case YAML_VALUE_TOKEN:
+
+			break;
+		} 
 
 		//checks if the file is done
-		done = (event.type == YAML_STREAM_END_EVENT);
+		done = (token.type == YAML_STREAM_END_TOKEN);
 
 		//frees up the event memory
-		yaml_event_delete(&event);
+		yaml_token_delete(&token);
 	}
 
 	printf("done loading commands\n");
