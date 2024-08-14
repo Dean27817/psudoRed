@@ -107,11 +107,32 @@ int main(int argc, char* argv[])
 				printf("end of file\n");
 			break;
 
+			//token types (read before actual token)
 			case YAML_KEY_TOKEN:
 
 			break;
 			case YAML_VALUE_TOKEN:
 
+			break;
+			//Block delimiters
+			case YAML_BLOCK_SEQUENCE_START_TOKEN:
+				printf("start blocking sequence\n");
+			break;
+			case YAML_BLOCK_ENTRY_TOKEN:
+				printf("start block\n");
+			break;
+			case YAML_BLOCK_END_TOKEN:
+				printf("end block\n");
+			break;
+			//data'
+			case YAML_BLOCK_MAPPING_START_TOKEN:
+				printf("Block Mapping\n");
+			break;
+			case YAML_SCALAR_TOKEN:
+				printf("scalar\n");
+			break;
+
+			default:
 			break;
 		} 
 

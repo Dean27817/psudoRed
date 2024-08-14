@@ -1,29 +1,29 @@
 coppy:
-  -x
+ -x
 
-  -y
+ -y
 
-  command:
-    -mov x y
+ command:
+ -mov x y
 move:
-  -x
+ -x
 
-  command:
-    -mov 0 x
-    -dat 0 -1
+ command:
+   -mov 0 x
+   -dat 0 -1
 
 int:
-  -x
+ -x
 
-  command:
-    -spl  1
-    -dat x
+ command:
+   -spl  1
+   -dat x
 
 split:
-  -x
+ -x
 
-  cpmmand:
-    -spl  x
+ cpmmand:
+  -spl  x
 
 if:
 
