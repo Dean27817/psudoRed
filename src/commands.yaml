@@ -1,28 +1,34 @@
+title: commands
+
 coppy:
- -x
+ -values:
+  -x
+  -y
 
- -y
-
- command:
- -mov x y
+ -command:
+  -mov x y
 move:
- -x
+ -values:
+  -x
+  -y
 
  command:
-   -mov 0 x
-   -dat 0 -1
+  -mov 0 x
+  -dat 0 -1
 
 int:
- -x
+ -values:
+   -x
 
- command:
+ -command:
    -spl  1
    -dat x
 
 split:
- -x
+ -values:
+  -x
 
- cpmmand:
+ -command:
   -spl  x
 
 if:
