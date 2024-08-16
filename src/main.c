@@ -14,11 +14,10 @@ typedef struct
 	char *name;
 
 	//the paramiters for the sub-commands
-	int x;
-	int y;
+	int values[];
 
 
-	//the array of all the sub commands that a keyword has
+	//the array of all  falsethe sub commands that a keyword has
 	subCommand *subArray[];
 } command;
 
@@ -86,6 +85,11 @@ int main(int argc, char* argv[])
 	///////////////////////////////////////////////////////////////////done starting files
 	
 	int done = 0;
+
+	//holds the list of commands
+	command *commandList[];
+	int i = 0;
+	bool name = true;
 	//reads the yaml file to set up the commands that will be translated
 	while(!done)
 	{
@@ -110,6 +114,12 @@ int main(int argc, char* argv[])
 			//token types (read before actual token)
 			case YAML_KEY_TOKEN:
 				printf ("(key token)");
+				if (name)
+				{
+					commandList[i] name =  token.data.scalar.value;
+					name = false;
+				}
+
 			break;
 			case YAML_VALUE_TOKEN:
 				printf("(value token)");
@@ -123,8 +133,9 @@ int main(int argc, char* argv[])
 			break;
 			case YAML_BLOCK_END_TOKEN:
 				printf("end block\n");
+				i++;
 			break;
-			//data"
+			//data
 			case YAML_BLOCK_MAPPING_START_TOKEN:
 				printf("Block Mapping\n");
 			break;
