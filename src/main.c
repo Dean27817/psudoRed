@@ -109,10 +109,10 @@ int main(int argc, char* argv[])
 
 			//token types (read before actual token)
 			case YAML_KEY_TOKEN:
-
+				printf ("(key token)");
 			break;
 			case YAML_VALUE_TOKEN:
-
+				printf("(value token)");
 			break;
 			//Block delimiters
 			case YAML_BLOCK_SEQUENCE_START_TOKEN:
@@ -124,12 +124,12 @@ int main(int argc, char* argv[])
 			case YAML_BLOCK_END_TOKEN:
 				printf("end block\n");
 			break;
-			//data'
+			//data"
 			case YAML_BLOCK_MAPPING_START_TOKEN:
 				printf("Block Mapping\n");
 			break;
 			case YAML_SCALAR_TOKEN:
-				printf("scalar\n");
+				printf("scalar %s\n", token.data.scalar.value);
 			break;
 
 			default:
