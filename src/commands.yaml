@@ -1,5 +1,3 @@
-title: commands
-
 coppy:
  -values:
   -x
@@ -19,7 +17,6 @@ move:
 int:
  -values:
    -x
-
  -command:
    -spl  1
    -dat x

@@ -1,4 +1,6 @@
 int a -1
-loop 4
-coppy 3 int
+while (1==1)
+{
+coppy 3	a
 a--
+}

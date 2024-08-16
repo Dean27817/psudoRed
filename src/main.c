@@ -5,8 +5,8 @@
 
 typedef struct
 {
-	char *name;
-	char *commands[];
+	char *ame;
+	char **commands;
 } subCommand;
 
 typedef struct
@@ -14,11 +14,11 @@ typedef struct
 	char *name;
 
 	//the paramiters for the sub-commands
-	int values[];
+	int *values;
 
 
 	//the array of all  falsethe sub commands that a keyword has
-	subCommand *subArray[];
+	subCommand **subArray;
 } command;
 
 bool openFile(FILE **file, char *fileName, char *fileType)
@@ -87,16 +87,27 @@ int main(int argc, char* argv[])
 	int done = 0;
 
 	//holds the list of commands
-	command *commandList[];
+	bool firstLine = true;
 	int i = 0;
 	bool name = true;
+	bool val = false;
+	bool writeCommand= false;
+	command **commandList;
+	int commandNum = 8;
+
+	//allocating memory
+	commandList = (command **)malloc(commandNum * sizeof(command)); 
+	for (int i = 0; i < commandNum; i++)
+	{
+		commandList[i] = (command *)malloc(sizeof(command)); 
+	}
 	//reads the yaml file to set up the commands that will be translated
 	while(!done)
 	{
 		//creates the event and checks for errors
 		if(!yaml_parser_scan(&parser, &token))
 		{
-			printf("error reading commands file");
+			printf("error reading commands file\n");
 			return 1;
 		}
 	
@@ -116,13 +127,32 @@ int main(int argc, char* argv[])
 				printf ("(key token)");
 				if (name)
 				{
-					commandList[i] name =  token.data.scalar.value;
+					commandList[i] -> name =  token.data.scalar.value;
 					name = false;
 				}
-
+				if ((char*)token.data.scalar.value  == "-values")
+				{
+					val = true;
+				}
+				if ((char*)token.data.scalar.value== "-command")
+				{
+					writeCommand= true;
+				}
 			break;
 			case YAML_VALUE_TOKEN:
 				printf("(value token)");
+				if (val)
+				{
+					for (int i = 0 ; i < (sizeof((char*)token.data.scalar.value) / sizeof(char)); i++)
+					{
+					
+					}
+					val = false;
+				}
+				if (writeCommand)
+				{
+					writeCommand = false;
+				}
 			break;
 			//Block delimiters
 			case YAML_BLOCK_SEQUENCE_START_TOKEN:
@@ -134,6 +164,7 @@ int main(int argc, char* argv[])
 			case YAML_BLOCK_END_TOKEN:
 				printf("end block\n");
 				i++;
+				name = true;
 			break;
 			//data
 			case YAML_BLOCK_MAPPING_START_TOKEN:
@@ -152,6 +183,22 @@ int main(int argc, char* argv[])
 
 		//frees up the event memory
 		yaml_token_delete(&token);
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////done reading yaml files
+	//freeing memory
+	for (int i = 0; i < commandNum; i++)
+	{
+		if (commandList[i] != NULL)
+		{
+			free(commandList[i]);
+			commandList[i] == NULL;
+		}
+	}
+	if (commandList != NULL)
+	{
+		free(commandList);
+		commandList = NULL;
 	}
 
 	printf("done loading commands\n");
