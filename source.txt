@@ -1,0 +1,4 @@
+int a -1
+loop 4
+coppy 3 int
+a--
