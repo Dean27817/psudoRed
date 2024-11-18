@@ -131,6 +131,20 @@ int main(int argc, char* argv[])
 					name = false;
 					printf("starting new key word\n");
 				}
+				if(token.type == YAML_SCALAR_TOKEN)
+				{
+					printf("IDK What Is happening at this point %s\n", token.data.scalar.value);
+					if (strcmp((char*)token.data.scalar.value, "values"))
+					{
+						printf("reading vars for command\n");
+						val = true;
+					}
+					if ((char*)token.data.scalar.value == (char*)"command")
+					{
+						printf("starting new command\n");
+						writeCommand= true;
+					}
+				}
 			break;
 			case YAML_VALUE_TOKEN:
 				printf("(value token)");
@@ -165,16 +179,6 @@ int main(int argc, char* argv[])
 				printf("Block Mapping\n");
 			break;
 			case YAML_SCALAR_TOKEN:
-				if ((char*)token.data.scalar.value  == (char*)"values")
-				{
-					printf("reading vars for command\n");
-					val = true;
-				}
-				if ((char*)token.data.scalar.value== "command")
-				{
-					printf("starting new command\n");
-					writeCommand= true;
-				}
 				printf("scalar %s\n", token.data.scalar.value);
 			break;
 
