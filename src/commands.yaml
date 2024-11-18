@@ -1,31 +1,26 @@
 coppy:
- -values:
-  -x
-  -y
+ values: 2 
 
- -command:
+ command:
   -mov x y
 move:
- -values:
-  -x
-  -y
+ values: 2
 
  command:
   -mov 0 x
   -dat 0 -1
 
 int:
- -values:
-   -x
- -command:
+ values: 1 
+
+ command:
    -spl  1
    -dat x
 
 split:
- -values:
-  -x
+ values: 1
 
- -command:
+ command:
   -spl  x
 
 if:
