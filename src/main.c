@@ -129,13 +129,16 @@ int main(int argc, char* argv[])
 				{
 					commandList[i] -> name =  token.data.scalar.value;
 					name = false;
+					printf("starting new key word\n");
 				}
 				if ((char*)token.data.scalar.value  == "-values")
 				{
+					printf("reading vars for command\n");
 					val = true;
 				}
 				if ((char*)token.data.scalar.value== "-command")
 				{
+					printf("starting new command\n");
 					writeCommand= true;
 				}
 			break;
@@ -145,8 +148,9 @@ int main(int argc, char* argv[])
 				{
 					for (int i = 0 ; i < (sizeof((char*)token.data.scalar.value) / sizeof(char)); i++)
 					{
-					
+						printf("%c", token.data.scalar.value[i]);
 					}
+					printf("\n");
 					val = false;
 				}
 				if (writeCommand)
