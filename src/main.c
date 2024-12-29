@@ -5,7 +5,7 @@
 
 typedef struct
 {
-	char *ame;
+	char *name;
 	char **commands;
 } subCommand;
 
@@ -152,7 +152,14 @@ int main(int argc, char* argv[])
 				{
 					for (int i = 0 ; i < (sizeof((char*)token.data.scalar.value) / sizeof(char)); i++)
 					{
+<<<<<<< Updated upstream
 						printf("%c", token.data.scalar.value[i]);
+=======
+						if((char*)token.data.scalar)
+						{
+							printf("scalar");
+						}
+>>>>>>> Stashed changes
 					}
 					printf("\n");
 					val = false;
